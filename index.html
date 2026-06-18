@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linear Search</title>
+
+<style>
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+        font-family:Arial, sans-serif;
+    }
+
+    body{
+        height:100vh;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        background:linear-gradient(135deg,#4f46e5,#06b6d4);
+    }
+
+    .container{
+        background:white;
+        width:450px;
+        padding:30px;
+        border-radius:15px;
+        box-shadow:0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    h2{
+        text-align:center;
+        color:#333;
+        margin-bottom:20px;
+    }
+
+    label{
+        font-weight:bold;
+        display:block;
+        margin-top:10px;
+        margin-bottom:5px;
+    }
+
+    input{
+        width:100%;
+        padding:10px;
+        border:1px solid #ccc;
+        border-radius:8px;
+        margin-bottom:10px;
+        outline:none;
+    }
+
+    input:focus{
+        border-color:#4f46e5;
+    }
+
+    button{
+        width:100%;
+        padding:12px;
+        border:none;
+        border-radius:8px;
+        background:#4f46e5;
+        color:white;
+        font-size:16px;
+        cursor:pointer;
+        margin-top:10px;
+    }
+
+    button:hover{
+        background:#3730a3;
+    }
+
+    #result{
+        margin-top:15px;
+        text-align:center;
+        font-weight:bold;
+        color:#111827;
+    }
+
+    .array-input{
+        margin-bottom:8px;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Linear Search</h2>
+
+    <label>Array Size</label>
+    <input type="number" id="size" placeholder="Enter array size">
+
+    <button onclick="generateInputs()">Create Array</button>
+
+    <div id="arrayContainer"></div>
+
+    <div id="searchSection" style="display:none;">
+        <label>Element to Search</label>
+        <input type="number" id="key" placeholder="Enter element">
+
+        <button onclick="linearSearch()">Search</button>
+    </div>
+
+    <div id="result"></div>
+</div>
+
+<script>
+
+function generateInputs() {
+
+    let size = document.getElementById("size").value;
+    let container = document.getElementById("arrayContainer");
+
+    container.innerHTML = "";
+
+    for(let i=0;i<size;i++){
+        container.innerHTML += `
+            <input type="number" 
+                   class="array-input"
+                   placeholder="Element ${i+1}">
+        `;
+    }
+
+    document.getElementById("searchSection").style.display = "block";
+}
+
+function linearSearch() {
+
+    let elements = document.querySelectorAll(".array-input");
+    let arr = [];
+
+    elements.forEach(input => {
+        arr.push(Number(input.value));
+    });
+
+    let key = Number(document.getElementById("key").value);
+
+    let found = false;
+    let position = -1;
+
+    for(let i=0;i<arr.length;i++){
+        if(arr[i] === key){
+            found = true;
+            position = i;
+            break;
+        }
+    }
+
+    if(found){
+        document.getElementById("result").innerHTML =
+            `✅ Element found at index ${position}`;
+    }
+    else{
+        document.getElementById("result").innerHTML =
+            `❌ Element not found in the array`;
+    }
+}
+
+// Press Enter to Search
+document.addEventListener("keydown", function(event){
+    if(event.key === "Enter"){
+        linearSearch();
+    }
+});
+
+</script>
+
+</body>
+</html>
